@@ -12,10 +12,15 @@
 class SElement
 {
   public:
-    SElement();
+    SElement(int x, int y, int width, int height);
     virtual void draw(Adafruit_ILI9341 tft) const = 0;
     void setOnClick(void (*onClick)(void));
     void click();
+
+    int x;
+    int y;
+    int width;
+    int height;
     
   private:
     void (*onClick)(void);

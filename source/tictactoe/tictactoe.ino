@@ -44,13 +44,23 @@ void loop() {
 
   Screen current;
 
-  //create Window
-  SEButton seb1;
-  seb1.setOnClick(&clii);
-  
+  //create Window  
   Screen s;
-  s.addElement(seb1);
-  s.render(tft); 
+  
+  SEButton seb_singleplayer(15,25,300,60,"SINGLEPLAYER");
+  SEButton seb_multiplayer(15,95,300,60,"MULTIPLAYER");
+  SEButton seb_options(15,165,300,60,"OPTIONS");
+  SEButton seb_credits(15,235,300,60,"CREDITS");
+  
+  seb_singleplayer.setOnClick(&clii);
+  
+  
+  s.addElement(seb_singleplayer);
+  s.addElement(seb_multiplayer);
+  s.addElement(seb_options);
+  s.addElement(seb_credits);
+  
+  s.render(0, tft); 
 
   // check for tab on screen
   if (ts.bufferEmpty()) {
@@ -83,32 +93,4 @@ void clii()
 {
   tft.fillCircle(40,40,40,ILI9341_RED);
 }
-
-
-
-/*void mainWnd()
-{
-  // create window
-  tft.fillScreen(ILI9341_BLACK);
-  tft.setRotation(0);
-
-  drawBtn(15, 25, "SINGLEPLAYER");
-  drawBtn(15, 95, "MULTIPLAYER");
-  drawBtn(15, 165, "OPTIONS");
-  drawBtn(15, 235, "CREDITS");
-
-  delay(10);
-}
-
-void drawBtn(int x, int y, char* text)
-{  
-  tft.fillRect(x,y,300,60,ILI9341_DARKCYAN);
-  tft.drawRect(x,y,300,60,ILI9341_BLUE);
-  tft.drawRect(x+1,y+1,299,58,ILI9341_BLUE);
-
-  tft.setCursor(x+8,y+23);
-  tft.setTextColor(ILI9341_BLACK);
-  tft.setTextSize(3);
-  tft.println(text);
-} */
 
