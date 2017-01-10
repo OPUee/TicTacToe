@@ -1,31 +1,41 @@
 
+int xOld, yOld;
+
 void drawIntro()
 {
+  // create window
+  tft.fillScreen(ILI9341_BLACK);
+  tft.setRotation(3);
+  
   for(int i = 0; i < 100; i++)
   {
-    render(i*2);
+    render(i*2);    
     delay(1);
   }
 }
 
 void render(int i)
 {
-  // create window
-  tft.fillScreen(ILI9341_BLACK);
-  tft.setRotation(3);
-  
   // draw background
   drawStar(20,WIDTH-i);
+  drawStar(80,160-i);
+  drawStar(50,180-i);
   
   // draw logo
   tft.setCursor(60,100);
   tft.setTextColor(ILI9341_LIGHTGREY);
   tft.setTextSize(4);
-  tft.println("TicTacToe"); 
+  tft.println("TicTacToe");
+   
 }
 
 void drawStar(int x, int y)
 {
+  tft.fillRect(xOld-3,yOld+8,7,16,ILI9341_BLACK);
+
+  xOld = x;
+  yOld = y;
+  
   // inner stuff
   tft.drawPixel(x,y,ILI9341_WHITE);
   tft.drawPixel(x-1,y,ILI9341_WHITE);
