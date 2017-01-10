@@ -5,12 +5,12 @@ void drawIntro()
 {
   // create window
   tft.fillScreen(ILI9341_BLACK);
-  tft.setRotation(3);
+  tft.setRotation(3);  
   
   for(int i = 0; i < 100; i++)
   {
     render(i*2);    
-    delay(1);
+    delay(10);
   }
 }
 
@@ -31,7 +31,7 @@ void render(int i)
 
 void drawStar(int x, int y)
 {
-  tft.fillRect(xOld-3,yOld+8,7,16,ILI9341_BLACK);
+  tft.fillRect(xOld-3,yOld-2,7,11,ILI9341_BLACK);
 
   xOld = x;
   yOld = y;
