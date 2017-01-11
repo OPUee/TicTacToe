@@ -25,13 +25,14 @@ class ScreenManager
 {
   public:
     ScreenManager();
-    void setScreen(const Screen s);
+    void setScreen(Screen *s);
     void render(Adafruit_ILI9341 tft);
     void checkEvents(Adafruit_STMPE610 ts);
 
   private:
     boolean isActive;
     const Screen *current;
+    int idI;
     
 };
 

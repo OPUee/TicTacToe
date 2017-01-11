@@ -3,18 +3,24 @@
 ScreenManager::ScreenManager()
 {
   this->isActive = true;
+  idI = 0;
 }
 
-void ScreenManager::setScreen(const Screen s)
+void ScreenManager::setScreen(Screen *s)
 {
-  this->current = &s;
+  this->current = s;
   this->isActive = false;
+
+  s->id = idI;
+  idI++;
 }
 
 void ScreenManager::render(Adafruit_ILI9341 tft)
 {
   if(!isActive)
   {
+    Serial.print("render_screen_id: ");
+    Serial.println(current->id);
     current->render(tft);
     isActive = true;
   }
@@ -26,11 +32,12 @@ void ScreenManager::checkEvents(Adafruit_STMPE610 ts)
   if (!ts.bufferEmpty())
   {
     TS_Point p;
-  
+    
     while(!ts.bufferEmpty())
     {
       p = ts.getPoint();
     }
+    
     
     //p.x = map(p.x, TS_MINX, TS_MAXX, 0, tft.width());
     //p.y = map(p.y, TS_MINY, TS_MAXY, 0, tft.height());

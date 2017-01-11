@@ -11,6 +11,7 @@ class Screen
     void render(Adafruit_ILI9341 tft) const;
     void addElement(const SElement &e);
     void checkEvent(int x, int y) const;
+    int id;
     
   private:
     const SElement *elements[20];
