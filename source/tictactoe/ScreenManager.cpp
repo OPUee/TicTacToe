@@ -3,24 +3,18 @@
 ScreenManager::ScreenManager()
 {
   this->isActive = true;
-  idI = 0;
 }
 
 void ScreenManager::setScreen(Screen *s)
 {
   this->current = s;
   this->isActive = false;
-
-  s->id = idI;
-  idI++;
 }
 
 void ScreenManager::render(Adafruit_ILI9341 tft)
 {
   if(!isActive)
   {
-    Serial.print("render_screen_id: ");
-    Serial.println(current->id);
     current->render(tft);
     isActive = true;
   }

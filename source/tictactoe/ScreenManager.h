@@ -32,7 +32,6 @@ class ScreenManager
   private:
     boolean isActive;
     const Screen *current;
-    int idI;
     
 };
 
