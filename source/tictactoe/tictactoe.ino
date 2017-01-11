@@ -40,12 +40,21 @@ void setup() {
   Serial.println("Touchscreen started");
 
   Serial.println("BP0");
+
+  // play intro
+  drawIntro();
+  
+  // create first screen
   menu = mainMenu();
   sm.setScreen(menu);
+
+  
 }
 
 void loop() {
+  Serial.println("render by manager");
   sm.render(tft);
+  Serial.println("touch by manager");
   sm.checkEvents(ts);
 }
 
@@ -59,8 +68,10 @@ Screen mainMenu()
   SEButton *seb_options = new SEButton(15,165,300,60,(char*)"OPTIONS");
   SEButton *seb_credits = new SEButton(15,235,300,60,(char*)"CREDITS");
   
-  seb_singleplayer->setOnClick(&clii);
-  
+  seb_singleplayer->setOnClick(&scli);
+  seb_multiplayer->setOnClick(&sclii);
+  seb_options->setOnClick(&scliii);
+  seb_credits->setOnClick(&scliiii);  
   
   s.addElement(*seb_singleplayer);
   s.addElement(*seb_multiplayer);
@@ -70,8 +81,24 @@ Screen mainMenu()
   return s;
 }
 
-void clii()
+void scli()
 {
   tft.fillCircle(40,40,40,ILI9341_RED);
 }
+
+void sclii()
+{
+  tft.fillCircle(40,40,40,ILI9341_GREENYELLOW);
+}
+
+void scliii()
+{
+  tft.fillCircle(40,40,40,ILI9341_PINK);
+}
+
+void scliiii()
+{
+  tft.fillCircle(40,40,40,ILI9341_DARKGREEN);
+}
+
 
