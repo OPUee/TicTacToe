@@ -1,9 +1,10 @@
-#include "SPI.h"
+/*#include "SPI.h"
 #include "Wire.h"
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
-#include <Adafruit_STMPE610.h>
+#include <Adafruit_STMPE610.h>*/
 
+#include "ScreenManager.h"
 #include "Screen.h"
 #include "SEButton.h"
 
@@ -14,79 +15,59 @@
 // The STMPE610 uses hardware SPI on the shield, and #8
 #define STMPE_CS 8
 
-// This is calibration data for the raw touch data to the screen coordinates
-#define TS_MINX 150
-#define TS_MINY 130
-#define TS_MAXX 3800
-#define TS_MAXY 4000
+#define WIDTH 240
+#define HEIGHT 320
+
 
 Adafruit_STMPE610 ts = Adafruit_STMPE610(STMPE_CS);
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 
-#define WIDTH 240
-#define HEIGHT 320
+ScreenManager sm;
+Screen menu(0,0);
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("ILI9341 Test!"); 
- 
-  tft.begin();
-  tft.fillScreen(ILI9341_BLACK);
+  Serial.println("TicTacToe!"); 
 
+  // init display
+  tft.begin();
+  
+  // init touch screen
   if (!ts.begin()) {
     Serial.println("Couldn't start touchscreen controller");
     while (1);
   }
   Serial.println("Touchscreen started");
+
+  Serial.println("BP0");
+  menu = mainMenu();
+  sm.setScreen(menu);
 }
 
 void loop() {
+  sm.render(tft);
+  sm.checkEvents(ts);
+}
 
-  Screen current;
-
+Screen mainMenu()
+{
   //create Window  
-  Screen s;
+  Screen s(0, ILI9341_BLACK);
   
-  SEButton seb_singleplayer(15,25,300,60,"SINGLEPLAYER");
-  SEButton seb_multiplayer(15,95,300,60,"MULTIPLAYER");
-  SEButton seb_options(15,165,300,60,"OPTIONS");
-  SEButton seb_credits(15,235,300,60,"CREDITS");
+  SEButton *seb_singleplayer = new SEButton(15,25,300,60,(char*)"SINGLEPLAYER");
+  SEButton *seb_multiplayer = new SEButton(15,95,300,60,(char*)"MULTIPLAYER");
+  SEButton *seb_options = new SEButton(15,165,300,60,(char*)"OPTIONS");
+  SEButton *seb_credits = new SEButton(15,235,300,60,(char*)"CREDITS");
   
-  seb_singleplayer.setOnClick(&clii);
+  seb_singleplayer->setOnClick(&clii);
   
   
-  s.addElement(seb_singleplayer);
-  s.addElement(seb_multiplayer);
-  s.addElement(seb_options);
-  s.addElement(seb_credits);
-  
-  s.render(0, tft); 
+  s.addElement(*seb_singleplayer);
+  s.addElement(*seb_multiplayer);
+  s.addElement(*seb_options);
+  s.addElement(*seb_credits);
 
-  // check for tab on screen
-  if (ts.bufferEmpty()) {
-    return;
-  }
-
-  TS_Point p;
-  
-  while(!ts.bufferEmpty())
-  {
-    p = ts.getPoint();
-  }
-  
-   
-
-  p.x = map(p.x, TS_MINX, TS_MAXX, 0, tft.width());
-  p.y = map(p.y, TS_MINY, TS_MAXY, 0, tft.height());
-
-  //Serial.println("Tabbed: " + p.x + ":" + p.y);
-  Serial.print(p.x);
-  Serial.print(":");
-  Serial.print(p.y);
-  Serial.print("\n");
-  
-  s.checkEvent(p.x, p.y);
-
+  return s;
 }
 
 void clii()

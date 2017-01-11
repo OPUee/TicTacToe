@@ -7,14 +7,16 @@
 class Screen
 {
   public:
-    Screen();
-    void render(int rotation, Adafruit_ILI9341 tft) const;
+    Screen(int rotation, int background);
+    void render(Adafruit_ILI9341 tft) const;
     void addElement(const SElement &e);
     void checkEvent(int x, int y) const;
     
   private:
     const SElement *elements[20];
     int elemI;
+    int rotation;
+    int background;
 };
 
 #endif

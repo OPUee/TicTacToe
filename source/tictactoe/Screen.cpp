@@ -1,18 +1,17 @@
-//#include "list"
 #include "Screen.h"
 #include "SElement.h"
 
-//std::list<SElement> elements;
-
-
-Screen::Screen()
+Screen::Screen(int rotation, int background)
 {
+  this->rotation = rotation;
+  this->background = background;
   elemI = 0;
 }
 
-void Screen::render(int rotation, Adafruit_ILI9341 tft) const
+void Screen::render(Adafruit_ILI9341 tft) const
 {
   tft.setRotation(rotation);
+  tft.fillScreen(background);
   
   for(int i = 0; i < elemI; i++)
   {
