@@ -1,3 +1,13 @@
+#include <Adafruit_ILI9341.h>
+
+#include <Adafruit_GFX.h>
+#include <gfxfont.h>
+
+#include <Adafruit_ILI9341.h>
+
+#include <Adafruit_GFX.h>
+#include <gfxfont.h>
+
 /*#include "SPI.h"
 #include "Wire.h"
 #include "Adafruit_GFX.h"
