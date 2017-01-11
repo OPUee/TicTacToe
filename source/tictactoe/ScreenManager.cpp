@@ -32,6 +32,8 @@ void ScreenManager::checkEvents(Adafruit_STMPE610 ts)
   if (!ts.bufferEmpty())
   {
     TS_Point p;
+
+    while(ts.touched()){}
     
     while(!ts.bufferEmpty())
     {
