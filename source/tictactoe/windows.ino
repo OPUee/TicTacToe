@@ -135,5 +135,7 @@ void onClick_eval(TS_Point p)
   Serial.println();
   
   sel_icon->draw(tft);
+
+  delete sel_icon;
 }
 
