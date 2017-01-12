@@ -46,34 +46,6 @@ void Controller::checkGameOver()
   if (turnCount >= GRID_SIZE-1) {
     gameOver = true;
   }
-
-  /*int tempMark;
-  
-  // vertical
-  for (int i = 0; i < 3; i++) {
-    tempMark = grid[i];
-    for (int j = 0; j < GRID_SIZE; j+=3) {
-      if (tempMark != grid[i+j]) {
-        return;
-      }
-    }
-  }
-
-  // horizontal
-  for (int i = 0; i < GRID_SIZE; i+=3) {
-    tempMark = grid[i];
-    for (int j = 0; j < 3; j++) {
-      
-    }
-  }
-
-  // diagonal
-  for (int i = 0; i < GRID_SIZE; i+=3) {
-    
-  }
-  for (int i = 2; i < GRID_SIZE; i+=3) {
-    
-  }*/
 }
 
 bool Controller::isGameOver()
