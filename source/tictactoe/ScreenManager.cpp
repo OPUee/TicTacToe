@@ -46,7 +46,7 @@ void ScreenManager::checkEvents(Adafruit_STMPE610 ts)
     Serial.print(p.y);
     Serial.print("\n");
     
-    current->checkEvent(p.x, p.y);
+    current->checkEvent(p);
   }
 }
 

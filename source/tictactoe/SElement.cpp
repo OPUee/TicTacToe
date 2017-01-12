@@ -8,12 +8,12 @@ SElement::SElement(int x, int y, int width, int height)
   this->height = height;
 }
 
-void SElement::click()
+void SElement::click(TS_Point p)
 {
-  onClick();
+  onClick(p);
 }
 
-void SElement::setOnClick(void (*onClick)(void))
+void SElement::setOnClick(void (*onClick)(TS_Point))
 {
   this->onClick = onClick;
 }

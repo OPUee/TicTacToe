@@ -25,18 +25,18 @@ void Screen::addElement(const SElement &e)
   elemI++;
 }
 
-void Screen::checkEvent(int x, int y)const
+void Screen::checkEvent(TS_Point p)const
 {
   //routine zum checken des punkte B-)
   
   for(int i = 0; i < elemI; i++)
   {
     const SElement *e = elements[i];
-    if(x > e->x && x < (e->width + e->x))
+    if(p.x > e->x && p.x < (e->width + e->x))
     {
-      if(y > e->y && y < (e->height + e->y))
+      if(p.y > e->y && p.y < (e->height + e->y))
       {
-        e->click();
+        e->click(p);
       }
     }
   }

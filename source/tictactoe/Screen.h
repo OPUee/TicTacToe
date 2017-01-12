@@ -10,7 +10,7 @@ class Screen
     Screen(int rotation, int background);
     void render(Adafruit_ILI9341 tft) const;
     void addElement(const SElement &e);
-    void checkEvent(int x, int y) const;
+    void checkEvent(TS_Point p) const;
     
   private:
     const SElement *elements[20];

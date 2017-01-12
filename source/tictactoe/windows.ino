@@ -54,13 +54,16 @@ Screen credits()
   return s;
 }
 
+// save the grid object global for evaluation process later... 
+// it's nasty :S .. but wayne
+SEGrid *seg_game = new SEGrid(0,60,WIDTH,HEIGHT-60,3,3,ILI9341_YELLOW);
+
 Screen game()
 {
   //create Window  
   Screen s(0, ILI9341_BLACK);
 
-  SEButton *seb_back = new SEButton(0,0,WIDTH,60,"EXIT");
-  SEGrid *seg_game = new SEGrid(0,60,WIDTH,HEIGHT-60,3,3,ILI9341_YELLOW);
+  SEButton *seb_back = new SEButton(0,0,WIDTH,60,(char*)"EXIT");
 
   seb_back->setOnClick(&onClick_back);
   seg_game->setOnClick(&onClick_eval);
@@ -71,36 +74,66 @@ Screen game()
   return s;  
 }
 
-void onClick_nothing()
+void onClick_nothing(TS_Point p)
 {
   
 }
 
-void onClick_back()
+void onClick_back(TS_Point p)
 {
   sm.setScreen(s_menu);
 }
 
-void onClick_game()
+void onClick_game(TS_Point p)
 {
   *s_game = game();
   sm.setScreen(s_game);
 }
 
-void onClick_credit()
+void onClick_credit(TS_Point p)
 {
   sm.setScreen(s_credits);
 }
 
-void onClick_eval()
+void onClick_eval(TS_Point p)
 {
-  SELabel *sel_asd = new SELabel(20,80,100,100,"X",ILI9341_CYAN,7);
-  sel_asd->setOnClick(&onClick_nothing);
-  s_game->addElement(*sel_asd);
+  int vOffset = seg_game->width / seg_game->cols;
+  int hOffset = seg_game->height / seg_game->rows;
 
-  SELabel *sel_asw = new SELabel(20,170,100,100,"O",ILI9341_ORANGE,7);
-  sel_asw->setOnClick(&onClick_nothing);
-  s_game->addElement(*sel_asw);
-  sm.setScreen(s_game);
+  p.x = p.x - seg_game->x;
+  p.y = p.y - seg_game->y;
+
+  int col = p.x / hOffset;
+  int row = p.y / vOffset;
+
+  Serial.print(col);
+  Serial.print(" ");
+  Serial.print(p.y);
+  Serial.print(" ");
+  Serial.println(hOffset);
+  Serial.print(row);
+  Serial.print(" ");
+  Serial.print(p.x);
+  Serial.print(" ");
+  Serial.println(vOffset);
+
+
+  int x = (col * vOffset) + 23 + seg_game->x;
+  int y = (row * hOffset) + 19 + seg_game->y; 
+  
+  SELabel *sel_icon = new SELabel(x,y,100,100,(char*)"X",ILI9341_ORANGE,7);
+
+  Serial.print("draw@:   ");
+  Serial.print(x);
+  Serial.print(":");
+  Serial.print(y);
+  Serial.println();
+  Serial.print("get@:   ");
+  Serial.print(p.x);
+  Serial.print(":");
+  Serial.print(p.y);
+  Serial.println();
+  
+  sel_icon->draw(tft);
 }
 
