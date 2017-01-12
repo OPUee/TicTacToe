@@ -59,11 +59,11 @@ Screen game()
   //create Window  
   Screen s(0, ILI9341_BLACK);
 
-  SEButton *seb_back = new SEButton(0,0,WIDTH,60,"BACK");
+  SEButton *seb_back = new SEButton(0,0,WIDTH,60,"EXIT");
   SEGrid *seg_game = new SEGrid(0,60,WIDTH,HEIGHT-60,3,3,ILI9341_YELLOW);
 
   seb_back->setOnClick(&onClick_back);
-  seg_game->setOnClick(&onClick_nothing);
+  seg_game->setOnClick(&onClick_eval);
 
   s.addElement(*seg_game);
   s.addElement(*seb_back);
@@ -83,6 +83,7 @@ void onClick_back()
 
 void onClick_game()
 {
+  *s_game = game();
   sm.setScreen(s_game);
 }
 
@@ -93,6 +94,13 @@ void onClick_credit()
 
 void onClick_eval()
 {
-  
+  SELabel *sel_asd = new SELabel(20,80,100,100,"X",ILI9341_CYAN,7);
+  sel_asd->setOnClick(&onClick_nothing);
+  s_game->addElement(*sel_asd);
+
+  SELabel *sel_asw = new SELabel(20,170,100,100,"O",ILI9341_ORANGE,7);
+  sel_asw->setOnClick(&onClick_nothing);
+  s_game->addElement(*sel_asw);
+  sm.setScreen(s_game);
 }
 
