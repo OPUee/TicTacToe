@@ -66,7 +66,7 @@ Screen game()
   SEButton *seb_back = new SEButton(0,0,WIDTH,60,(char*)"EXIT");
 
   seb_back->setOnClick(&onClick_back);
-  seg_game->setOnClick(&onClick_eval);
+  seg_game->setOnClick(&onClick_game_preeval);
 
   s.addElement(*seg_game);
   s.addElement(*seb_back);
@@ -88,6 +88,7 @@ void onClick_game(TS_Point p)
 {
   *s_game = game();
   sm.setScreen(s_game);
+  cnt->reset();
 }
 
 void onClick_credit(TS_Point p)
@@ -95,7 +96,61 @@ void onClick_credit(TS_Point p)
   sm.setScreen(s_credits);
 }
 
-void onClick_eval(TS_Point p)
+void onClick_game_draw(int pos)
+{
+  int vOffset = seg_game->width / seg_game->cols;
+  int hOffset = seg_game->height / seg_game->rows;
+  
+  int col = pos % seg_game->cols;
+  int row = pos / seg_game->cols;
+
+  Serial.println(col);
+  Serial.println(row);
+
+  int x = (col * vOffset) + 23 + seg_game->x;
+  int y = (row * hOffset) + 19 + seg_game->y; 
+  
+  if(cnt->getCurrentPlayer())
+  {
+    SELabel *sel_icon = new SELabel(x,y,100,100,(char*)"O",ILI9341_GREENYELLOW,7);
+    sel_icon->draw(tft);
+    delete sel_icon;
+  }
+  else
+  {
+    SELabel *sel_icon = new SELabel(x,y,100,100,(char*)"X",ILI9341_ORANGE,7);
+    sel_icon->draw(tft);
+    delete sel_icon;
+  }
+
+  // game postevaluation
+  if(cnt->isGameOver())
+  {
+    // i know it's not nice... but it's late 
+    if(cnt->getCurrentPlayer())
+    {      
+      char *text = (char*)"PLAYER 1 WIN";
+      SEButton *seb_over = new SEButton(0,130,240,60,text);
+      seb_over->setOnClick(&onClick_nothing);
+      s_game->addElement(*seb_over); 
+      seb_over->draw(tft);
+    }
+    else
+    {
+      char *text = (char*)"PLAYER 2 WIN";
+      SEButton *seb_over = new SEButton(0,130,240,60,text); 
+      seb_over->setOnClick(&onClick_nothing);
+      s_game->addElement(*seb_over);   
+      seb_over->draw(tft);
+    }
+    
+    
+    //sm.setScreen(s_game);
+  }
+  
+}
+
+void onClick_game_preeval(TS_Point p)
 {
   int vOffset = seg_game->width / seg_game->cols;
   int hOffset = seg_game->height / seg_game->rows;
@@ -106,36 +161,8 @@ void onClick_eval(TS_Point p)
   int col = p.x / hOffset;
   int row = p.y / vOffset;
 
-  Serial.print(col);
-  Serial.print(" ");
-  Serial.print(p.y);
-  Serial.print(" ");
-  Serial.println(hOffset);
-  Serial.print(row);
-  Serial.print(" ");
-  Serial.print(p.x);
-  Serial.print(" ");
-  Serial.println(vOffset);
-
-
-  int x = (col * vOffset) + 23 + seg_game->x;
-  int y = (row * hOffset) + 19 + seg_game->y; 
+  int mPos = (row * seg_game->cols) + col;
   
-  SELabel *sel_icon = new SELabel(x,y,100,100,(char*)"X",ILI9341_ORANGE,7);
-
-  Serial.print("draw@:   ");
-  Serial.print(x);
-  Serial.print(":");
-  Serial.print(y);
-  Serial.println();
-  Serial.print("get@:   ");
-  Serial.print(p.x);
-  Serial.print(":");
-  Serial.print(p.y);
-  Serial.println();
-  
-  sel_icon->draw(tft);
-
-  delete sel_icon;
+  cnt->setMark(mPos);
 }
 

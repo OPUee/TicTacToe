@@ -1,7 +1,8 @@
 #include "Controller.h"
 
-Controller::Controller()
+Controller::Controller(void (*isSet)(int))
 {
+  this->isSet = isSet;
   reset();
 }
 
@@ -13,6 +14,7 @@ void Controller::setMark(int pos)
       checkGameOver();
       nextPlayer();
       turnCount++;
+      isSet(pos);
     }
   }
 }

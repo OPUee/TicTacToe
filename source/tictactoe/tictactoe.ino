@@ -10,6 +10,8 @@
 #include "SELabel.h"
 #include "SEGrid.h"
 
+#include "Controller.h"
+
 // The display also uses hardware SPI, plus #9 & #10
 #define TFT_DC 9
 #define TFT_CS 10
@@ -28,6 +30,8 @@ ScreenManager sm;
 Screen *s_menu = new Screen(0,0);
 Screen *s_credits = new Screen(0,0);
 Screen *s_game = new Screen(0,0);
+
+Controller * cnt = new Controller(&onClick_game_draw);
 
 void setup() {
   Serial.begin(9600);

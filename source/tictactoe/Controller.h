@@ -10,7 +10,7 @@
 class Controller
 {
   public:
-    Controller();
+    Controller(void (*isSet)(int));
     void setMark(int pos);
     void nextPlayer();
     void checkGameOver();
@@ -25,6 +25,7 @@ class Controller
     int winner;
     int turnCount;
     int grid[GRID_SIZE];
+    void (*isSet)(int);
 };
 
 #endif
