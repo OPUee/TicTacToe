@@ -7,6 +7,8 @@
 #include "ScreenManager.h"
 #include "Screen.h"
 #include "SEButton.h"
+#include "SELabel.h"
+#include "SEGrid.h"
 
 // The display also uses hardware SPI, plus #9 & #10
 #define TFT_DC 9
@@ -25,6 +27,7 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 ScreenManager sm;
 Screen *s_menu = new Screen(0,0);
 Screen *s_credits = new Screen(0,0);
+Screen *s_game = new Screen(0,0);
 
 void setup() {
   Serial.begin(9600);
@@ -48,6 +51,8 @@ void setup() {
   // create first screen
   *s_menu = mainMenu();
   *s_credits = credits();
+  *s_game = game();
+  
   sm.setScreen(s_menu);
 
   
