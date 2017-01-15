@@ -50,7 +50,7 @@ void setup() {
   Serial.println("BP0");
 
   // play intro
-  //drawIntro();
+  drawIntro();
   
   // create first screen
   *s_menu = mainMenu();
@@ -58,8 +58,6 @@ void setup() {
   *s_game = game();
   
   sm.setScreen(s_menu);
-
-  
 }
 
 void loop() {

@@ -3,13 +3,13 @@ Screen mainMenu()
   //create Window  
   Screen s(0, ILI9341_BLACK);
   
-  SEButton *seb_singleplayer = new SEButton(15,25,300,60,(char*)"SINGLEPLAYER");
-  SEButton *seb_multiplayer = new SEButton(15,95,300,60,(char*)"MULTIPLAYER");
+  SEButton *seb_singleplayer = new SEButton(15,25,300,60,(char*)"ONE PLAYER");
+  SEButton *seb_multiplayer = new SEButton(15,95,300,60,(char*)"TWO PLAYER");
   SEButton *seb_options = new SEButton(15,165,300,60,(char*)"OPTIONS");
   SEButton *seb_credits = new SEButton(15,235,300,60,(char*)"CREDITS");
   
-  seb_singleplayer->setOnClick(&onClick_game);
-  seb_multiplayer->setOnClick(&onClick_nothing);
+  seb_singleplayer->setOnClick(&onClick_nothing);
+  seb_multiplayer->setOnClick(&onClick_game);
   seb_options->setOnClick(&onClick_nothing);
   seb_credits->setOnClick(&onClick_credit);  
   
@@ -129,7 +129,7 @@ void onClick_game_draw(int pos)
     // i know it's not nice... but it's late 
     if(cnt->getCurrentPlayer())
     {      
-      char *text = (char*)"PLAYER 1 WIN";
+      char *text = (char*)"PLAYER 1 WON";
       SEButton *seb_over = new SEButton(0,130,240,60,text);
       seb_over->setOnClick(&onClick_nothing);
       s_game->addElement(*seb_over); 
@@ -137,7 +137,7 @@ void onClick_game_draw(int pos)
     }
     else
     {
-      char *text = (char*)"PLAYER 2 WIN";
+      char *text = (char*)"PLAYER 2 WON";
       SEButton *seb_over = new SEButton(0,130,240,60,text); 
       seb_over->setOnClick(&onClick_nothing);
       s_game->addElement(*seb_over);   
