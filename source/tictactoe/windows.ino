@@ -126,26 +126,17 @@ void onClick_game_draw(int pos)
   // game postevaluation
   if(cnt->isGameOver())
   {
-    // i know it's not nice... but it's late 
-    if(cnt->getCurrentPlayer())
-    {      
-      char *text = (char*)"PLAYER 1 WON";
-      SEButton *seb_over = new SEButton(0,130,240,60,text);
-      seb_over->setOnClick(&onClick_nothing);
-      s_game->addElement(*seb_over); 
-      seb_over->draw(tft);
-    }
-    else
-    {
-      char *text = (char*)"PLAYER 2 WON";
-      SEButton *seb_over = new SEButton(0,130,240,60,text); 
-      seb_over->setOnClick(&onClick_nothing);
-      s_game->addElement(*seb_over);   
-      seb_over->draw(tft);
-    }
+    // even better way than last time
+  
+    char *text = (char*)"PLAYER 1 WON";
+    char *tmp;
+    itoa(cnt->getWinner()+1,tmp,10);
+    text[7] = *tmp;
     
-    
-    //sm.setScreen(s_game);
+    SEButton *seb_over = new SEButton(0,130,240,60,text);
+    seb_over->setOnClick(&onClick_nothing);
+    s_game->addElement(*seb_over); 
+    seb_over->draw(tft);
   }
   
 }
