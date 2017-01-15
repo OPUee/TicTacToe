@@ -127,11 +127,21 @@ void onClick_game_draw(int pos)
   if(cnt->isGameOver())
   {
     // even better way than last time
-  
-    char *text = (char*)"PLAYER 1 WON";
-    char *tmp;
-    itoa(cnt->getWinner()+1,tmp,10);
-    text[7] = *tmp;
+
+    int winner = cnt->getWinner();
+    char *text;    
+    
+    if(winner == -1)
+    {
+      text = (char*)"TIED!";
+    }
+    else
+    {
+      char *text = (char*)"PLAYER 1 WON";
+      char *tmp;
+      itoa(cnt->getWinner()+1,tmp,10);
+      text[7] = *tmp;
+    }
     
     SEButton *seb_over = new SEButton(0,130,240,60,text);
     seb_over->setOnClick(&onClick_nothing);
