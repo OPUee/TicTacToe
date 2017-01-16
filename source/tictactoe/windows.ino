@@ -28,11 +28,12 @@ Screen credits()
 
   char *text = (char*)"TicTacToe\ncreated by\nJulian Altmeyer\nLukas Luschin";
   
-  SELabel *sel_header = new SELabel(40,20,100,100,(char*)"TicTacToe",ILI9341_LIGHTGREY,3);
-  SELabel *sel_line1 = new SELabel(90,60,100,100,(char*)"created by",ILI9341_LIGHTGREY,1);
-  SELabel *sel_line2 = new SELabel(30,120,100,100,(char*)"Julian Altmeyer",ILI9341_LIGHTGREY,2);
-  SELabel *sel_line3 = new SELabel(110,150,100,100,(char*)"&",ILI9341_LIGHTGREY,3);
-  SELabel *sel_line4 = new SELabel(40,190,100,100,(char*)"Lukas Luschin",ILI9341_LIGHTGREY,2);
+  SELabel *sel_header = new SELabel(40,20,100,100,(char*)"TicTacToe",ILI9341_ORANGE,3);
+  SELabel *sel_line1 = new SELabel(90,60,100,100,(char*)"created by",ILI9341_ORANGE,1);
+  SELabel *sel_line2 = new SELabel(30,120,100,100,(char*)"Julian Altmeyer",ILI9341_YELLOW,2);
+  SELabel *sel_line3 = new SELabel(110,150,100,100,(char*)"&",ILI9341_ORANGE,3);
+  SELabel *sel_line4 = new SELabel(40,190,100,100,(char*)"Lukas Luschin",ILI9341_YELLOW,2);
+
 
   SELabel *sel_back = new SELabel(0,0,WIDTH,HEIGHT,(char*)"",0,0);
   
@@ -56,20 +57,23 @@ Screen credits()
 
 // save the grid object global for evaluation process later... 
 // it's nasty :S .. but wayne
-SEGrid *seg_game = new SEGrid(0,60,WIDTH,HEIGHT-60,3,3,ILI9341_YELLOW);
+SEGrid *seg_game = new SEGrid(0,20,WIDTH,HEIGHT-40,3,3,ILI9341_YELLOW);
 
 Screen game()
 {
   //create Window  
   Screen s(0, ILI9341_BLACK);
 
-  SEButton *seb_back = new SEButton(0,0,WIDTH,60,(char*)"EXIT");
+  SEButton *seb_quit = new SEButton(0,HEIGHT-40,WIDTH,40,(char*)"QUIT");
+  SELabel *sel_info = new SELabel(0,0,100,100,(char*)"PLAYER",ILI9341_ORANGE,2);
 
-  seb_back->setOnClick(&onClick_back);
+  seb_quit->setOnClick(&onClick_back);
   seg_game->setOnClick(&onClick_game_preeval);
+  sel_info->setOnClick(&onClick_nothing);
 
   s.addElement(*seg_game);
-  s.addElement(*seb_back);
+  s.addElement(*seb_quit);
+  s.addElement(*sel_info);
 
   return s;  
 }
