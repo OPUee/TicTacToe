@@ -47,8 +47,6 @@ void setup() {
   }
   Serial.println("Touchscreen started");
 
-  Serial.println("BP0");
-
   // play intro
   drawIntro();
   

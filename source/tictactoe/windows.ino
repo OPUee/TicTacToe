@@ -104,9 +104,6 @@ void onClick_game_draw(int pos)
   int col = pos % seg_game->cols;
   int row = pos / seg_game->cols;
 
-  Serial.println(col);
-  Serial.println(row);
-
   int x = (col * vOffset) + 23 + seg_game->x;
   int y = (row * hOffset) + 19 + seg_game->y; 
   
@@ -129,15 +126,15 @@ void onClick_game_draw(int pos)
     // even better way than last time
 
     int winner = cnt->getWinner();
-    char *text;    
+    char *text; 
     
-    if(winner == -1)
+    if(winner < 0)
     {
       text = (char*)"TIED!";
     }
     else
     {
-      char *text = (char*)"PLAYER 1 WON";
+      text = (char*)"PLAYER 1 WON";
       char *tmp;
       itoa(cnt->getWinner()+1,tmp,10);
       text[7] = *tmp;
